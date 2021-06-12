@@ -10,8 +10,8 @@ public interface EvaluationRepository extends JpaRepository<Evaluation, Long> {
     @Query(value = "select " +
             "           e.* " +
             "       from " +
-            "           ingamaps.local_evaluations le " +
-            "       inner join ingamaps.evaluation e on " +
+            "           local_evaluations le " +
+            "       inner join evaluation e on " +
             "           e.id = le.evaluations_id " +
             "       where " +
             "           e.tourist_id = :touristId " +
