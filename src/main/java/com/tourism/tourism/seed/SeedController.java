@@ -1,6 +1,7 @@
 package com.tourism.tourism.seed;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,6 +15,11 @@ public class SeedController {
     @PutMapping(path = "all")
     public void runAll() {
         seedService.runAll();
+    }
+
+    @GetMapping(path = "health")
+    public Boolean health() {
+        return true;
     }
 
     @PutMapping(path = "tourist-anonymous")

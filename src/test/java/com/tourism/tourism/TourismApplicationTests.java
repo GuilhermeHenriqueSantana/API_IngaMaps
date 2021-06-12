@@ -1,10 +1,10 @@
-package com.turismo.turismo;
+package com.tourism.tourism;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class TurismoApplicationTests {
+class TourismApplicationTests {
 
 	@Test
 	void contextLoads() {

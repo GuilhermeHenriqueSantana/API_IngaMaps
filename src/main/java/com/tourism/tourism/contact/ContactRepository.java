@@ -10,7 +10,7 @@ public interface ContactRepository extends JpaRepository<Contact, Long> {
     @Query(nativeQuery = true, value = "select " +
             "                               c.* " +
             "                           from " +
-            "                               ingamaps.contact c " +
+            "                               contact c " +
             "                           where " +
             "                               c.name ilike concat('%',:name,'%') " +
             "                               and c.category ilike concat('%',:category,'%')")
