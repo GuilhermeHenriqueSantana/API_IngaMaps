@@ -2,6 +2,7 @@ package com.tourism.tourism.auth;
 
 import com.tourism.tourism.auth.dtos.ChangePasswordDto;
 import com.tourism.tourism.auth.dtos.LoginDto;
+import com.tourism.tourism.auth.dtos.LoginResponseDto;
 import com.tourism.tourism.userlogin.UserLoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,7 +25,7 @@ public class AuthController {
     private UserLoginService userLoginService;
 
     @PostMapping
-    public ResponseEntity login(@RequestBody LoginDto loginDto) {
+    public ResponseEntity<LoginResponseDto> login(@RequestBody LoginDto loginDto) {
         try {
             Authentication authentication = authenticationManager
                     .authenticate(
@@ -33,15 +34,14 @@ public class AuthController {
                             )
                     );
 
-            String token = authService.generateToken(loginDto.getUsername(), loginDto.getPassword());
-            return ResponseEntity.ok(token);
+            return ResponseEntity.ok(authService.buildLoginResponseDTO(loginDto.getUsername(), loginDto.getPassword()));
         } catch (BadCredentialsException ex) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
 
     @PostMapping(path = "change-password")
-    public ResponseEntity changePassword(@RequestBody ChangePasswordDto changePasswordDto) {
+    public ResponseEntity<LoginResponseDto> changePassword(@RequestBody ChangePasswordDto changePasswordDto) {
         try {
             Authentication authentication = authenticationManager
                     .authenticate(
@@ -51,8 +51,7 @@ public class AuthController {
                     );
 
             userLoginService.changePassword(changePasswordDto);
-            String token = authService.generateToken(changePasswordDto.getUsername(), changePasswordDto.getNewPassword());
-            return ResponseEntity.ok(token);
+            return ResponseEntity.ok(authService.buildLoginResponseDTO(changePasswordDto.getUsername(), changePasswordDto.getNewPassword()));
         } catch (BadCredentialsException ex) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }

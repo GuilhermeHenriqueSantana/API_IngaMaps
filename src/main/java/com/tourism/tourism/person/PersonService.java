@@ -3,6 +3,7 @@ package com.tourism.tourism.person;
 import com.tourism.tourism.person.dtos.PersonChangePhotoDTO;
 import com.tourism.tourism.person.exceptions.PersonBadRequestException;
 import com.tourism.tourism.photo.Photo;
+import com.tourism.tourism.userlogin.UserLoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +15,8 @@ import java.util.Objects;
 public class PersonService {
   @Autowired
   private PersonRepository personRepository;
+  @Autowired
+  private UserLoginService userLoginService;
 
   public Person changePhoto(PersonChangePhotoDTO personChangePhotoDTO) {
     validatePersonChangePhoto(personChangePhotoDTO);
@@ -35,5 +38,11 @@ public class PersonService {
     if (Objects.isNull(personChangePhotoDTO.getBase64()) || personChangePhotoDTO.getBase64().isBlank()) {
       throw new PersonBadRequestException("Without photo base64.");
     }
+  }
+
+  public Person getPersonByUsername(String username) {
+    return personRepository.getByUserLoginId(
+            userLoginService.getIdByUsername(username)
+    );
   }
 }

@@ -42,7 +42,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.and();
 
 		http.authorizeRequests()
-			.antMatchers( "/h2-console/**").permitAll()
+			.antMatchers("/swagger-ui.html/**").permitAll()
+			.antMatchers("/webjars/**").permitAll()
+			.antMatchers( "/swagger-resources/**").permitAll()
+			.antMatchers("/v2/api-docs").permitAll()
+			.antMatchers("/h2-console/**").permitAll()
 			.antMatchers("/api/public/**").permitAll()
 			.antMatchers(HttpMethod.POST, "/api/tourist").permitAll()
 			.antMatchers(HttpMethod.POST, "/api/employee").permitAll()
